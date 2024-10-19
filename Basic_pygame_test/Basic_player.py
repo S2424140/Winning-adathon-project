@@ -1,6 +1,5 @@
 import pygame
-from Basic_pygame_test import constants
-from Basic_pygame_test.Sprite_Services import Portfolio_model
+import constants, Portfolio_model
 
 
 class Player(pygame.sprite.Sprite):

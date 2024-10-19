@@ -1,5 +1,5 @@
 import pygame
-from Basic_pygame_test import constants
+import constants
 
 
 class MarketStall(pygame.sprite.Sprite):
