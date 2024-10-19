@@ -104,15 +104,15 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()  # Get click position
             for b in buttons:
-<<<<<<< HEAD
+
                 if b.on_button(x,y):
                     print("Button clicked.")
                     b.click(grapher)
-=======
+
                 if b.on_button(x, y):
                     # print("Button clicked.")
                     b.click()
->>>>>>> 2998b52ab3fb4ae26f70b363a63353ab810bb02b
+
 
     if collection_cooldown > 0:
         collection_cooldown -= 1
