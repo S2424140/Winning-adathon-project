@@ -1,7 +1,8 @@
 import pygame
 
+from Buttons import Button, Sell_button, Buy_button
 
-from Buttons import Button, Sell_button
+
 from Minable_model import Minable
 from Basic_player import Player
 from Market_Stall import MarketStall
@@ -23,18 +24,33 @@ Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
 Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
-temp_button = Sell_button("Test button",100,100,50,50)
+
+"""BUTTONS"""
+gold_buy = Buy_button("0",100,100,700,50,player.portfolio)
+iron_buy = Buy_button("1",100,100,700,150,player.portfolio)
+coal_buy = Buy_button("2",100,100,700,250,player.portfolio)
+gold_sell = Sell_button("0",100,100,600,50,player.portfolio)
+iron_sell = Sell_button("1",100,100,600,150,player.portfolio)
+coal_sell = Sell_button("2",100,100,600,250,player.portfolio)
+
+
+# temp_button = Sell_button("Test button",100,100,50,50,player.portfolio)
 
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
 piles = pygame.sprite.Group()
+
+# Button sprites
+buttons = [gold_buy,iron_buy,coal_buy,gold_sell,iron_sell,coal_sell]
+for b in buttons:
+    all_sprites.add(b)
+
 
 all_sprites.add(player)
 all_sprites.add(market_stall)
 all_sprites.add(Gold_pile)
 all_sprites.add(Coal_pile)
 all_sprites.add(Iron_pile)
-all_sprites.add(temp_button)
 piles.add(Gold_pile, Iron_pile, Coal_pile)
 market_stalls.add(market_stall)
 
@@ -66,7 +82,7 @@ def display_portfolio(portfolio, screen, font):
 # Main game loop
 running = True
 show_portfolio = False  # Flag to toggle portfolio visibility
-draw_graph = False  # Flag to draw the graph
+draw_graph = False # Flag to draw the graph
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Handles game closing
@@ -83,7 +99,13 @@ while running:
             print("Collision with pile detected")
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos() # Get click position
-            print(temp_button.on_button(x,y))
+            for b in buttons:
+                if b.on_button(x,y):
+                    print("Button clicked.")
+                    b.click()
+
+
+
 
     if collection_cooldown > 0:
         collection_cooldown -= 1
