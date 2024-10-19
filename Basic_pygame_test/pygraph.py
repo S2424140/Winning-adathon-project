@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from io import BytesIO
-import sys
 
 class Grapher:
     def __init__(self, screen, destination=(0,0)):
