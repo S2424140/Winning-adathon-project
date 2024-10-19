@@ -1,6 +1,7 @@
 import pygame
-from Basic_pygame_test.Sprite_Services.Basic_player import Player
-from Basic_pygame_test.Sprite_Services.Market_Stall import MarketStall
+
+from Sprite_Services.Basic_player import Player
+from Sprite_Services.Market_Stall import MarketStall
 import constants
 
 # Game initialization
@@ -21,7 +22,7 @@ all_sprites.add(market_stall)
 market_stalls.add(market_stall)
 
 # custom collision event
-COLLISION_EVENT = pygame.USEREVENT + 1
+MARKET_COLLISION_EVENT = pygame.USEREVENT + 1
 
 # initializing collision flag
 collision_occurred = False
@@ -49,7 +50,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Handles game closing
             running = False
-        elif event.type == COLLISION_EVENT:
+        elif event.type == MARKET_COLLISION_EVENT:
             print("Custom Event: Collision detected with Market Stall!")
             # Handle market stall collisions here <---
         elif event.type == pygame.KEYDOWN:
@@ -68,7 +69,7 @@ while running:
     if collisions:
         if not collision_occurred:
             collision_occurred = True
-            pygame.event.post(pygame.event.Event(COLLISION_EVENT))
+            pygame.event.post(pygame.event.Event(MARKET_COLLISION_EVENT))
     else:
         collision_occurred = False
 
