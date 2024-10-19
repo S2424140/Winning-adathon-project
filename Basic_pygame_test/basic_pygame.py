@@ -1,11 +1,11 @@
 import pygame
 import sys
 from Basic_player import Player
-
+import constants
 
 # Game initialization
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode(constants.size)
 pygame.display.set_caption("2D Top-Down Game")
 clock = pygame.time.Clock()
 
