@@ -1,9 +1,11 @@
 import pygame
 
+from Buttons import Button
 from Minable_model import Minable
 from Basic_player import Player
 from Market_Stall import MarketStall
 import constants
+import pygraph
 
 # Game initialization
 pygame.init()
@@ -19,6 +21,8 @@ Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
 Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
+temp_button = Button("Test button",100,100,50,50)
+
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
 piles = pygame.sprite.Group()
@@ -30,6 +34,8 @@ all_sprites.add(Coal_pile)
 all_sprites.add(Iron_pile)
 piles.add(Gold_pile, Iron_pile, Coal_pile)
 market_stalls.add(market_stall)
+
+grapher = pygraph.Grapher(screen)
 
 # custom collision event
 MARKET_COLLISION_EVENT = pygame.USEREVENT + 1
@@ -60,12 +66,14 @@ def display_portfolio(portfolio, screen, font):
 # Main game loop
 running = True
 show_portfolio = False  # Flag to toggle portfolio visibility
+draw_draph = False # Flag to draw the graph
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Handles game closing
             running = False
         elif event.type == MARKET_COLLISION_EVENT:
             print("Custom Event: Collision detected with Market Stall!")
+            draw_graph = True
             # Handle market stall collisions here <---
         elif event.type == pygame.KEYDOWN:
             # Toggle portfolio visibility when SPACE is pressed
@@ -78,7 +86,7 @@ while running:
         collection_cooldown -= 1
 
     # stores the (x,y) coordinates into
-    # the variable as a tuple 
+    # the variable as a tuple
     mouse = pygame.mouse.get_pos()
 
     keys = pygame.key.get_pressed()
@@ -91,6 +99,7 @@ while running:
             market_collision_occurred = True
             pygame.event.post(pygame.event.Event(MARKET_COLLISION_EVENT))
     else:
+        draw_graph
         market_collision_occurred = False
 
     if collection_cooldown == 0:
@@ -110,7 +119,13 @@ while running:
     if show_portfolio:
         display_portfolio(player.portfolio, screen, font)
 
+    if draw_draph:
+        grapher.draw()
+
     pygame.display.flip()  # Refresh display
     clock.tick(60)  # Maintain 60 FPS
 
 pygame.quit()
+
+
+
