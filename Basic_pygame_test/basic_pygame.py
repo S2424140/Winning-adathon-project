@@ -11,6 +11,7 @@ screen = pygame.display.set_mode(constants.size)
 pygame.display.set_caption("2D Top-Down Game")
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)  # None uses the default font, size 36
+collection_cooldown = 60
 
 # Game objects
 Gold_pile = Minable(constants.Gold_path, constants.Gold_pos)
@@ -20,19 +21,25 @@ player = Player()
 market_stall = MarketStall()
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
+piles = pygame.sprite.Group()
 
 all_sprites.add(player)
 all_sprites.add(market_stall)
 all_sprites.add(Gold_pile)
 all_sprites.add(Coal_pile)
 all_sprites.add(Iron_pile)
+piles.add(Gold_pile, Iron_pile, Coal_pile)
 market_stalls.add(market_stall)
 
 # custom collision event
 MARKET_COLLISION_EVENT = pygame.USEREVENT + 1
+PILE_COLLISION_EVENT = pygame.USEREVENT + 2
 
 # initializing collision flag
-collision_occurred = False
+market_collision_occurred = False
+gold_collision_occurred = False
+coal_collision_occurred = False
+Iron_collision_occurred = False
 
 
 # Function to display the portfolio interface
@@ -64,6 +71,11 @@ while running:
             # Toggle portfolio visibility when SPACE is pressed
             if event.key == pygame.K_SPACE:
                 show_portfolio = not show_portfolio
+        elif event.type == PILE_COLLISION_EVENT:
+            print("Collision with pile detected")
+
+    if collection_cooldown > 0:
+        collection_cooldown -= 1
 
     # stores the (x,y) coordinates into
     # the variable as a tuple 
@@ -72,13 +84,25 @@ while running:
     keys = pygame.key.get_pressed()
     player.update(keys)
 
-    collisions = pygame.sprite.spritecollide(player, market_stalls, False)
-    if collisions:
-        if not collision_occurred:
-            collision_occurred = True
+    market_collisions = pygame.sprite.spritecollide(player, market_stalls, False)
+
+    if market_collisions:
+        if not market_collision_occurred:
+            market_collision_occurred = True
             pygame.event.post(pygame.event.Event(MARKET_COLLISION_EVENT))
     else:
-        collision_occurred = False
+        market_collision_occurred = False
+
+    if collection_cooldown == 0:
+        piles_collision = pygame.sprite.spritecollideany(player, piles)
+        if piles_collision:
+            if piles_collision == Gold_pile:
+                player.portfolio.add_gold(constants.Gold_add)
+            elif piles_collision == Iron_pile:
+                player.portfolio.add_iron(constants.Iron_add)
+            elif piles_collision == Coal_pile:
+                player.portfolio.add_coal(constants.Coal_add)
+        collection_cooldown = 60
 
     screen.fill((255, 255, 255))  # Clear screen
     all_sprites.draw(screen)  # Draw sprites
@@ -90,6 +114,3 @@ while running:
     clock.tick(60)  # Maintain 60 FPS
 
 pygame.quit()
-
-
-
