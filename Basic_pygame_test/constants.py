@@ -18,5 +18,5 @@ Iron_path = "Assets/PileAssets/IronPile.png"
 Iron_pos = (width - pwidth - 10, Gold_pos[1] + pheight + 10)
 Coal_path = "Assets/PileAssets/CoalPile.png"
 Coal_pos = (width - pwidth - 10, Gold_pos[1] - pheight - 10)
-
-
+Sell_path = "Assets/Buttons/sell.png"
+Buy_path = "Assets/Buttons/buy.jpg"

@@ -1,7 +1,7 @@
 import pygame
 from Basic_player import Player
 from Market_Stall import MarketStall
-from Buttons import Button
+from Buttons import Button, Sell_button
 
 
 from Minable_model import Minable
@@ -22,7 +22,7 @@ Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
 Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
-temp_button = Button("Test button",100,100,50,50)
+temp_button = Sell_button("Test button",100,100,50,50)
 
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
@@ -32,6 +32,7 @@ all_sprites.add(market_stall)
 all_sprites.add(Gold_pile)
 all_sprites.add(Coal_pile)
 all_sprites.add(Iron_pile)
+all_sprites.add(temp_button)
 market_stalls.add(market_stall)
 
 # custom collision event
@@ -70,6 +71,9 @@ while running:
             # Toggle portfolio visibility when SPACE is pressed
             if event.key == pygame.K_SPACE:
                 show_portfolio = not show_portfolio
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos() # Get click position
+            print(temp_button.on_button(x,y))
 
     # stores the (x,y) coordinates into
     # the variable as a tuple 
