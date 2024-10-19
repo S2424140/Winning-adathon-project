@@ -1,6 +1,8 @@
 import pygame
-from Basic_pygame_test.Sprite_Services.Basic_player import Player
-from Basic_pygame_test.Sprite_Services.Market_Stall import MarketStall
+from Sprite_Services.Basic_player import Player
+from Sprite_Services.Market_Stall import MarketStall
+from Sprite_Services.Buttons import Button
+
 import constants
 
 # Game initialization
@@ -12,9 +14,12 @@ clock = pygame.time.Clock()
 # Game objects
 player = Player()
 market_stall = MarketStall()
+temp_button = Button("Test button",100,100,50,50)
+
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(market_stall)
+all_sprites.add(temp_button)
 
 # Main game loop
 running = True
