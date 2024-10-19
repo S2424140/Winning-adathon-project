@@ -1,5 +1,10 @@
 import pygame
+from Basic_player import Player
+from Market_Stall import MarketStall
+from Buttons import Button
 
+
+from Minable_model import Minable
 from Basic_player import Player
 from Market_Stall import MarketStall
 import constants
@@ -13,13 +18,21 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)  # None uses the default font, size 36
 
 # Game objects
+Gold_pile = Minable(constants.Gold_path, constants.Gold_pos)
+Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
+Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
+temp_button = Button("Test button",100,100,50,50)
+
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
 
 all_sprites.add(player)
 all_sprites.add(market_stall)
+all_sprites.add(Gold_pile)
+all_sprites.add(Coal_pile)
+all_sprites.add(Iron_pile)
 market_stalls.add(market_stall)
 
 grapher = pygraph.Grapher(screen)
