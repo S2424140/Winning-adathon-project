@@ -2,7 +2,6 @@ import pygame
 
 from Buttons import Button, Sell_button, Buy_button
 
-
 from Minable_model import Minable
 from Basic_player import Player
 from Market_Stall import MarketStall
@@ -13,7 +12,7 @@ import csv_reader
 # Game initialization
 pygame.init()
 screen = pygame.display.set_mode(constants.size)
-pygame.display.set_caption("2D Top-Down Game")
+pygame.display.set_caption("Stock Starter")
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)  # None uses the default font, size 36
 collection_cooldown = 60
@@ -25,27 +24,27 @@ Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
 Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
+background = pygame.image.load(constants.Background_path).convert()
 
 """BUTTONS"""
-gold_buy = Buy_button("0",100,100,700,50,player.portfolio)
-iron_buy = Buy_button("1",100,100,700,150,player.portfolio)
-coal_buy = Buy_button("2",100,100,700,250,player.portfolio)
-gold_sell = Sell_button("0",100,100,600,50,player.portfolio)
-iron_sell = Sell_button("1",100,100,600,150,player.portfolio)
-coal_sell = Sell_button("2",100,100,600,250,player.portfolio)
-
+gold_buy = Buy_button("0", 100, 100, 600, 50, player.portfolio)
+iron_buy = Buy_button("1", 100, 100, 600, 150, player.portfolio)
+coal_buy = Buy_button("2", 100, 100, 600, 250, player.portfolio)
+gold_sell = Sell_button("0", 100, 100, 500, 50, player.portfolio)
+iron_sell = Sell_button("1", 100, 100, 500, 150, player.portfolio)
+coal_sell = Sell_button("2", 100, 100, 500, 250, player.portfolio)
 
 # temp_button = Sell_button("Test button",100,100,50,50,player.portfolio)
+
 
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
 piles = pygame.sprite.Group()
 
 # Button sprites
-buttons = [gold_buy,iron_buy,coal_buy,gold_sell,iron_sell,coal_sell]
+buttons = [gold_buy, iron_buy, coal_buy, gold_sell, iron_sell, coal_sell]
 for b in buttons:
     all_sprites.add(b)
-
 
 all_sprites.add(player)
 all_sprites.add(market_stall)
@@ -55,6 +54,8 @@ all_sprites.add(Iron_pile)
 piles.add(Gold_pile, Iron_pile, Coal_pile)
 market_stalls.add(market_stall)
 
+
+# Graphing & data initialization
 reader = csv_reader.CSVReader()
 data = reader.get_stock("IBM")
 grapher = pygraph.Grapher(screen, data)
@@ -85,13 +86,13 @@ def display_portfolio(portfolio, screen, font):
 # Main game loop
 running = True
 show_portfolio = False  # Flag to toggle portfolio visibility
-draw_graph = False # Flag to draw the graph
+draw_graph = False  # Flag to draw the graph
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Handles game closing
             running = False
         elif event.type == MARKET_COLLISION_EVENT:
-            print("Custom Event: Collision detected with Market Stall!")
+            # print("Custom Event: Collision detected with Market Stall!")
             draw_graph = True
 
         elif event.type == pygame.KEYDOWN:
@@ -101,14 +102,17 @@ while running:
         elif event.type == PILE_COLLISION_EVENT:
             print("Collision with pile detected")
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            x, y = pygame.mouse.get_pos() # Get click position
+            x, y = pygame.mouse.get_pos()  # Get click position
             for b in buttons:
+<<<<<<< HEAD
                 if b.on_button(x,y):
                     print("Button clicked.")
                     b.click(grapher)
-
-
-
+=======
+                if b.on_button(x, y):
+                    # print("Button clicked.")
+                    b.click()
+>>>>>>> 2998b52ab3fb4ae26f70b363a63353ab810bb02b
 
     if collection_cooldown > 0:
         collection_cooldown -= 1
@@ -146,8 +150,8 @@ while running:
         collection_cooldown = 60
         collision_occurred = False
 
-
     screen.fill((255, 255, 255))  # Clear screen
+    screen.blit(background, (0, 0))
     all_sprites.draw(screen)  # Draw sprites
     # Show the player's portfolio if the flag is true
     if show_portfolio:
@@ -160,6 +164,3 @@ while running:
     clock.tick(60)  # Maintain 60 FPS
 
 pygame.quit()
-
-
-
