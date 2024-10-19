@@ -17,9 +17,15 @@ all_sprites = pygame.sprite.Group(player)
 running = True
 while running:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT: # Handles game closing
             running = False
 
+    
+    # stores the (x,y) coordinates into 
+    # the variable as a tuple 
+    mouse = pygame.mouse.get_pos() 
+
+        
     keys = pygame.key.get_pressed()
     player.update(keys)
 
