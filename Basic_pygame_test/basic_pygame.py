@@ -3,6 +3,7 @@ import pygame
 from Basic_player import Player
 from Market_Stall import MarketStall
 import constants
+import pygraph
 
 # Game initialization
 pygame.init()
@@ -20,6 +21,8 @@ market_stalls = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(market_stall)
 market_stalls.add(market_stall)
+
+grapher = pygraph.Grapher(screen)
 
 # custom collision event
 MARKET_COLLISION_EVENT = pygame.USEREVENT + 1
@@ -46,12 +49,14 @@ def display_portfolio(portfolio, screen, font):
 # Main game loop
 running = True
 show_portfolio = False  # Flag to toggle portfolio visibility
+draw_draph = False # Flag to draw the graph
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Handles game closing
             running = False
         elif event.type == MARKET_COLLISION_EVENT:
             print("Custom Event: Collision detected with Market Stall!")
+            draw_draph = True
             # Handle market stall collisions here <---
         elif event.type == pygame.KEYDOWN:
             # Toggle portfolio visibility when SPACE is pressed
@@ -59,7 +64,7 @@ while running:
                 show_portfolio = not show_portfolio
 
     # stores the (x,y) coordinates into
-    # the variable as a tuple 
+    # the variable as a tuple
     mouse = pygame.mouse.get_pos()
 
     keys = pygame.key.get_pressed()
@@ -71,6 +76,7 @@ while running:
             collision_occurred = True
             pygame.event.post(pygame.event.Event(MARKET_COLLISION_EVENT))
     else:
+        draw_draph = False
         collision_occurred = False
 
     screen.fill((255, 255, 255))  # Clear screen
@@ -78,6 +84,12 @@ while running:
     # Show the player's portfolio if the flag is true
     if show_portfolio:
         display_portfolio(player.portfolio, screen, font)
+
+    if draw_draph:
+        grapher.draw()
+        print("Drawing graph")
+    # else:
+    #     grapher.stop()
 
     pygame.display.flip()  # Refresh display
     clock.tick(60)  # Maintain 60 FPS
