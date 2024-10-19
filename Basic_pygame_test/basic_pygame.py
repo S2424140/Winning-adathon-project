@@ -112,6 +112,8 @@ while running:
             elif piles_collision == Coal_pile:
                 player.portfolio.add_coal(constants.Coal_add)
         collection_cooldown = 60
+        collision_occurred = False
+
 
     screen.fill((255, 255, 255))  # Clear screen
     all_sprites.draw(screen)  # Draw sprites
