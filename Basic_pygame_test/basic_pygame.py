@@ -4,6 +4,7 @@ from Market_Stall import MarketStall
 from Buttons import Button
 
 
+from Minable_model import Minable
 from Basic_player import Player
 from Market_Stall import MarketStall
 import constants
@@ -16,6 +17,9 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)  # None uses the default font, size 36
 
 # Game objects
+Gold_pile = Minable(constants.Gold_path, constants.Gold_pos)
+Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
+Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
 temp_button = Button("Test button",100,100,50,50)
@@ -25,7 +29,32 @@ market_stalls = pygame.sprite.Group()
 
 all_sprites.add(player)
 all_sprites.add(market_stall)
-all_sprites.add(temp_button)
+all_sprites.add(Gold_pile)
+all_sprites.add(Coal_pile)
+all_sprites.add(Iron_pile)
+market_stalls.add(market_stall)
+
+# custom collision event
+MARKET_COLLISION_EVENT = pygame.USEREVENT + 1
+
+# initializing collision flag
+collision_occurred = False
+
+
+# Function to display the portfolio interface
+def display_portfolio(portfolio, screen, font):
+    # Render the portfolio values
+    gold_text = font.render(f"Gold: {portfolio.get_gold()}", True, (255, 215, 0))
+    iron_text = font.render(f"Iron: {portfolio.get_iron()}", True, (192, 192, 192))
+    coal_text = font.render(f"Coal: {portfolio.get_coal()}", True, (105, 105, 105))
+    money_text = font.render(f"Money: ${portfolio.get_money()}", True, (0, 255, 0))
+
+    # Blit (draw) the text onto the screen
+    screen.blit(gold_text, (50, 50))
+    screen.blit(iron_text, (50, 100))
+    screen.blit(coal_text, (50, 150))
+    screen.blit(money_text, (50, 200))
+
 
 # Main game loop
 running = True
