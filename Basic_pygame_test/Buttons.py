@@ -29,14 +29,49 @@ class Sell_button(Button):
     def __init__(self,id:str,bwidth:int,bheight:int,x:int,y:int,port:Portfolio_model)->None:
         super().__init__(id,bwidth,bheight,x,y,constants.Sell_path)
         self.portfolio = port
+        self.id = id
 
-    def click():
-        pass
+    def click(self):
+        p = self.portfolio
+        try:
+            match self.id:
+                case "0":
+                    p.remove_gold(100)
+                    p.add_money(10)
+                    print("Sold gold.")
+                case "1":
+                    p.remove_iron(100)
+                    p.add_money(10)
+                    print("Sold iron.")
+                case "2":
+                    p.remove_coal(100)
+                    p.add_money(10)
+                    print("Sold coal.")
+        except:
+            print("Invalid sell.")
 
 class Buy_button(Button):
     def __init__(self,id:str,bwidth:int,bheight:int,x:int,y:int,port:Portfolio_model)->None:
         super().__init__(id,bwidth,bheight,x,y,constants.Buy_path)
         self.portfolio = port
+        self.id = id
 
-    def click():
-        pass
+    def click(self):
+        p = self.portfolio
+        try:
+            match self.id:
+                case "0":
+                    p.add_gold(100)
+                    p.remove_money(10)
+                    print("Bought gold.")
+                case "1":
+                    p.add_iron(100)
+                    p.remove_money(10)
+                    print("Sold iron.")
+                case "2":
+                    print("")
+                    p.add_coal(100)
+                    p.remove_money(10)
+                    print("Sold coal.")
+        except:
+            print("Invalid buy.")
