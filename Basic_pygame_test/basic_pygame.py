@@ -3,6 +3,9 @@ from Sprite_Services.Basic_player import Player
 from Sprite_Services.Market_Stall import MarketStall
 from Sprite_Services.Buttons import Button
 
+
+from Basic_player import Player
+from Market_Stall import MarketStall
 import constants
 
 # Game initialization
