@@ -35,22 +35,22 @@ class Grapher:
         screen.blit(self.surface, self.dest)
         pygame.display.flip()
 
+## example usage:
+# pygame.init()
+# clock = pygame.time.Clock()
 
-pygame.init()
-clock = pygame.time.Clock()
+# width, height = 800, 600
+# screen = pygame.display.set_mode((width, height))
 
-width, height = 800, 600
-screen = pygame.display.set_mode((width, height))
+# running = True
+# grapher = Grapher()
+# while running:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
 
-running = True
-grapher = Grapher()
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+#     grapher.draw()
 
-    grapher.draw()
-
-    # Cap the frame rate
-    clock.tick(30)
+#     # Cap the frame rate
+#     clock.tick(30)
 
