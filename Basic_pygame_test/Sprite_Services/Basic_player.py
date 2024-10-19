@@ -1,5 +1,6 @@
 import pygame
-import constants
+from Basic_pygame_test import constants
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -29,7 +30,5 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom > constants.height:
             self.rect.bottom = constants.height  # Prevent moving out from the bottom
 
-# Create the player
-player = Player()
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
+
+

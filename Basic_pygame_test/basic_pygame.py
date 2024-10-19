@@ -1,6 +1,6 @@
 import pygame
-import sys
-from Basic_player import Player
+from Basic_pygame_test.Sprite_Services.Basic_player import Player
+from Basic_pygame_test.Sprite_Services.Market_Stall import MarketStall
 import constants
 
 # Game initialization
@@ -11,7 +11,10 @@ clock = pygame.time.Clock()
 
 # Game objects
 player = Player()
-all_sprites = pygame.sprite.Group(player)
+market_stall = MarketStall()
+all_sprites = pygame.sprite.Group()
+all_sprites.add(player)
+all_sprites.add(market_stall)
 
 # Main game loop
 running = True
