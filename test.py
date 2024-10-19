@@ -5,10 +5,10 @@ motivation = True
 energy = 10
 
 while motivation:
-    print("coding??")
+    print("we are going to win")
     energy -= 1
     if energy == 0:
         motivation = False
 
-print("Merging oh yeah")
+print("I sleep")
 
