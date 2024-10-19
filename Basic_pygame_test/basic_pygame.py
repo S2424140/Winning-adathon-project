@@ -109,9 +109,6 @@ while running:
                     print("Button clicked.")
                     b.click(grapher)
 
-                if b.on_button(x, y):
-                    # print("Button clicked.")
-                    b.click()
 
 
     if collection_cooldown > 0:
