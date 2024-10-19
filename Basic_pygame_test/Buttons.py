@@ -1,6 +1,7 @@
 import pygame
 import constants
 import Portfolio_model
+from pygraph import Grapher
 
 # Base class for a static button for a UI
 class Button(pygame.sprite.Sprite):
@@ -31,21 +32,22 @@ class Sell_button(Button):
         self.portfolio = port
         self.id = id
 
-    def click(self):
+    def click(self,grapher:Grapher):
         p = self.portfolio
+        price = grapher.get_price()
         try:
             match self.id:
                 case "0":
-                    p.remove_gold(100)
-                    p.add_money(10)
+                    p.remove_gold(1/price)
+                    p.add_money(1)
                     print("Sold gold.")
                 case "1":
-                    p.remove_iron(100)
-                    p.add_money(10)
+                    p.remove_iron(1/price)
+                    p.add_money(1)
                     print("Sold iron.")
                 case "2":
-                    p.remove_coal(100)
-                    p.add_money(10)
+                    p.remove_coal(1/price)
+                    p.add_money(1)
                     print("Sold coal.")
         except:
             print("Invalid sell.")
@@ -56,22 +58,23 @@ class Buy_button(Button):
         self.portfolio = port
         self.id = id
 
-    def click(self):
+    def click(self,grapher:Grapher):
         p = self.portfolio
+        price = grapher.get_price()
         try:
             match self.id:
                 case "0":
-                    p.add_gold(100)
-                    p.remove_money(10)
+                    p.add_gold(1*price)
+                    p.remove_money(1)
                     print("Bought gold.")
                 case "1":
-                    p.add_iron(100)
-                    p.remove_money(10)
+                    p.add_iron(1*price)
+                    p.remove_money(1)
                     print("Sold iron.")
                 case "2":
                     print("")
-                    p.add_coal(100)
-                    p.remove_money(10)
+                    p.add_coal(1*price)
+                    p.remove_money(1)
                     print("Sold coal.")
         except:
             print("Invalid buy.")

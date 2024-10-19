@@ -105,7 +105,7 @@ while running:
             for b in buttons:
                 if b.on_button(x,y):
                     print("Button clicked.")
-                    b.click()
+                    b.click(grapher)
 
 
 
