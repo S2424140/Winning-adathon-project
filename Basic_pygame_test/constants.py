@@ -7,6 +7,10 @@ Starter_Gold = 0
 Starter_Iron = 10
 Starter_Coal = 20
 
+Gold_add = 1
+Coal_add = 10
+Iron_add = 5
+
 pile_size = pwidth, pheight = 100, 100
 
 D_Idle_path = "Assets/Player-Animations/D_Idle.png"
