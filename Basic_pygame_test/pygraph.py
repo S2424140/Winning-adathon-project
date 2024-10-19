@@ -6,8 +6,9 @@ from io import BytesIO
 import sys
 
 class Grapher:
-    def __init__(self, destination=(0,0)):
+    def __init__(self, screen, destination=(0,0)):
         self.dest = destination
+        self.screen = screen
 
         self.x_data = np.arange(28)
         self.y_data = np.random.random(28)*100
@@ -30,12 +31,15 @@ class Grapher:
         buf.seek(0)
         self.surface = pygame.image.load(buf)
 
+    def set_destination(self, destination):
+        self.dest = destination
+
     def draw(self):
         self.update()
-        screen.blit(self.surface, self.dest)
+        self.screen.blit(self.surface, self.dest)
         pygame.display.flip()
 
-## example usage:
+# # example usage:
 # pygame.init()
 # clock = pygame.time.Clock()
 
@@ -43,7 +47,7 @@ class Grapher:
 # screen = pygame.display.set_mode((width, height))
 
 # running = True
-# grapher = Grapher()
+# grapher = Grapher(screen)
 # while running:
 #     for event in pygame.event.get():
 #         if event.type == pygame.QUIT:
