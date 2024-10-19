@@ -24,9 +24,13 @@ class Grapher:
 
     def update(self):
         self.y_data = np.delete(self.y_data,0)
-        self.y_data = np.append(self.y_data, next(self.data))
+        self.next_y_val = next(self.data)
+        self.y_data = np.append(self.y_data, self.next_y_val)
         self.ln.set_data(self.x_data, self.y_data)
         self.fig_to_surface()
+
+    def get_price(self):
+        return self.next_y_val
 
     def fig_to_surface(self):
         buf = BytesIO()
