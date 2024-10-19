@@ -87,9 +87,6 @@ while running:
 
     if draw_draph:
         grapher.draw()
-        print("Drawing graph")
-    # else:
-    #     grapher.stop()
 
     pygame.display.flip()  # Refresh display
     clock.tick(60)  # Maintain 60 FPS
