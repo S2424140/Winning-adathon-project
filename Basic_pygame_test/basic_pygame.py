@@ -55,6 +55,8 @@ all_sprites.add(Iron_pile)
 piles.add(Gold_pile, Iron_pile, Coal_pile)
 market_stalls.add(market_stall)
 
+
+# Graphing & data initialization
 reader = csv_reader.CSVReader()
 data = reader.get_stock("IBM")
 grapher = pygraph.Grapher(screen, data)
