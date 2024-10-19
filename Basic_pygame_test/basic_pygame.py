@@ -14,6 +14,7 @@ pygame.display.set_caption("2D Top-Down Game")
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)  # None uses the default font, size 36
 collection_cooldown = 60
+market_cooldown = 60
 
 # Game objects
 Gold_pile = Minable(constants.Gold_path, constants.Gold_pos)
@@ -21,7 +22,7 @@ Iron_pile = Minable(constants.Iron_path, constants.Iron_pos)
 Coal_pile = Minable(constants.Coal_path, constants.Coal_pos)
 player = Player()
 market_stall = MarketStall()
-temp_button = Button("Test button",100,100,50,50)
+temp_button = Button("Test button", 100, 100, 50, 50)
 
 all_sprites = pygame.sprite.Group()
 market_stalls = pygame.sprite.Group()
@@ -43,9 +44,6 @@ PILE_COLLISION_EVENT = pygame.USEREVENT + 2
 
 # initializing collision flag
 market_collision_occurred = False
-gold_collision_occurred = False
-coal_collision_occurred = False
-Iron_collision_occurred = False
 
 
 # Function to display the portfolio interface
@@ -66,7 +64,7 @@ def display_portfolio(portfolio, screen, font):
 # Main game loop
 running = True
 show_portfolio = False  # Flag to toggle portfolio visibility
-draw_graph = False # Flag to draw the graph
+draw_graph = False  # Flag to draw the graph
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Handles game closing
@@ -74,7 +72,7 @@ while running:
         elif event.type == MARKET_COLLISION_EVENT:
             print("Custom Event: Collision detected with Market Stall!")
             draw_graph = True
-            # Handle market stall collisions here <---
+
         elif event.type == pygame.KEYDOWN:
             # Toggle portfolio visibility when SPACE is pressed
             if event.key == pygame.K_SPACE:
@@ -84,6 +82,11 @@ while running:
 
     if collection_cooldown > 0:
         collection_cooldown -= 1
+    if market_cooldown > 0:
+        market_cooldown -= 1
+    if market_cooldown == 0:
+        grapher.update()
+        market_cooldown = 60
 
     # stores the (x,y) coordinates into
     # the variable as a tuple
@@ -93,7 +96,6 @@ while running:
     player.update(keys)
 
     market_collisions = pygame.sprite.spritecollide(player, market_stalls, False)
-
     if market_collisions:
         if not market_collision_occurred:
             market_collision_occurred = True
@@ -114,9 +116,9 @@ while running:
         collection_cooldown = 60
         collision_occurred = False
 
-
     screen.fill((255, 255, 255))  # Clear screen
     all_sprites.draw(screen)  # Draw sprites
+
     # Show the player's portfolio if the flag is true
     if show_portfolio:
         display_portfolio(player.portfolio, screen, font)
@@ -124,10 +126,9 @@ while running:
     if draw_graph:
         grapher.draw()
 
+
+
     pygame.display.flip()  # Refresh display
     clock.tick(60)  # Maintain 60 FPS
 
 pygame.quit()
-
-
-

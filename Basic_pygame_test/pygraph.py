@@ -34,9 +34,8 @@ class Grapher:
         self.dest = destination
 
     def draw(self):
-        self.update()
         self.screen.blit(self.surface, self.dest)
-        pygame.display.flip()
+
 
 # # example usage:
 # pygame.init()
