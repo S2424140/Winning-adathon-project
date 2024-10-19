@@ -8,6 +8,7 @@ from Basic_player import Player
 from Market_Stall import MarketStall
 import constants
 import pygraph
+import csv_reader
 
 # Game initialization
 pygame.init()
@@ -54,7 +55,9 @@ all_sprites.add(Iron_pile)
 piles.add(Gold_pile, Iron_pile, Coal_pile)
 market_stalls.add(market_stall)
 
-grapher = pygraph.Grapher(screen)
+reader = csv_reader.CSVReader()
+data = reader.get_stock("IBM")
+grapher = pygraph.Grapher(screen, data)
 
 # custom collision event
 MARKET_COLLISION_EVENT = pygame.USEREVENT + 1
