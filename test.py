@@ -10,5 +10,5 @@ while motivation:
     if energy == 0:
         motivation = False
 
-print("branched")
+print("branched 2")
 
